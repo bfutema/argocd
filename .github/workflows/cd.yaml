@@ -20,6 +20,17 @@ jobs:
 
   deploy:
     name: Deploy
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      issues: write
+      packages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+      statuses: write
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -39,11 +50,9 @@ jobs:
 
       - name: Commit
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git commit -am "ci: :green_heart: change image tag"
 
       - name: Push
         uses: ad-m/github-push-action@master
-        with:
-          force_with_lease: true
