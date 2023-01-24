@@ -25,6 +25,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Kustomize
         uses: imranismail/setup-kustomize@v1
@@ -45,6 +48,3 @@ jobs:
 
       - name: Push
         uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PUSH_TOKEN }}
-          branch: ${{ github.ref }}
