@@ -9,4 +9,4 @@ namespace: goapp
 images:
 - name: goapp
   newName: brunofutema/argocd-fullcycle
-  newTag: cb05dbe5a20d8572158e7f7001d2d2838ea1dadc
+  newTag: facd990bb53b38926f468e8167a92782fb326c45
