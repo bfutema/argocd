@@ -7,10 +7,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
 
-      - name: Build image and push to docker hub
+      - name: build image and push to docker hub
         uses: docker/build-push-action@v1.1.0
         with:
           username: brunofutema
@@ -23,31 +23,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
-      - name: Kustomize
+      - name: kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize_version: v3.6.1
 
-      - name: Update k8s
+      - name: update k8s
         run: |
           cd k8s
           kustomize edit set image goapp=brunofutema/argocd-fullcycle:${{ github.sha }}
           cat kustomization.yaml
-
-      - name: Commit
+      - name: commit
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -am "ci: :green_heart: change image tag"
-
-      - name: Push
+          git config --local user.email "action@github.com"
+          git config --local user.name "Deploy Action"
+          git commit -am "change image tag"
+      - name: push
         uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
